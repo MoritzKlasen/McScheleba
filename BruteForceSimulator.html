@@ -35,19 +35,6 @@
     <script>
         let availableNetworks = [];
         let selectedNetwork = null;
-        let wordlist = [
-            "password", "123456", "123456789", "qwerty", "abc123", "password1", "12345", "iloveyou", "admin", "welcome",
-            "monkey", "football", "letmein", "dragon", "sunshine", "princess", "superman", "trustno1", "qazwsx", "qwerty123",
-            "654321", "baseball", "starwars", "computer", "987654321", "hunter", "freedom", "whatever", "maverick",
-            "passw0rd", "ninja", "mustang", "shadow", "killer", "666666", "jordan23", "1qaz2wsx", "soccer", "asdfgh",
-            "qwertyuiop", "zxcvbnm", "pokemon", "welcome1", "charlie", "batman", "hello123", "letmein1", "donald", "trustme",
-            "temp1234", "azerty", "qwertz", "hallo123", "master", "sunshine1", "securepass", "iamsecure", "supersecure",
-            "ultrasecure", "networkpass", "accessgranted", "eliteh4x0r", "superhacker", "p@ssword", "p@ssw0rd", "admin123",
-            "admin2024", "root", "root123", "toor", "adminadmin", "adminpass", "000000", "111111", "121212", "123123", 
-            "123321", "123abc", "987654", "87654321", "741852963", "963852741", "31415926", "112233", "qwert123", "azerty123",
-            "bigmac", "whopper", "doublecheese", "tripleking", "stackoverflow", "githubrocks", "securityfirst", "tryhard",
-            "1234567890", "102030", "6543210", "1a2b3c4d", "hackme", "youcantguess", "totallysecure"
-        ];
 
         function logMessage(message) {
             let output = document.getElementById("output");
@@ -65,7 +52,7 @@
         function getFakeNetworks() {
             return [
                 { ssid: "A1-7F3D20", security: "WPA2", difficulty: 3 },
-                { ssid: "UPC Wi-Free", security: "WPA2", difficulty: 2 },
+                { ssid: "UPC", security: "WPA2", difficulty: 2 },
                 { ssid: "Magenta_Hotspot_22", security: "WPA3", difficulty: 4 },
                 { ssid: "Drei-HuaweiRouter-5G", security: "WPA2", difficulty: 3 },
                 { ssid: "Café Central WiFi", security: "WPA", difficulty: 1 },
@@ -86,6 +73,28 @@
             ];
         }
 
+        function displayNetworks() {
+            let table = document.getElementById("networkTable");
+            let tableBody = document.getElementById("networkTableBody");
+            tableBody.innerHTML = "";
+            table.style.display = "table";
+
+            availableNetworks.forEach(net => {
+                let row = document.createElement("tr");
+                row.innerHTML = `<td>${net.ssid}</td><td>${net.security}</td><td>${"★".repeat(net.difficulty)}</td>`;
+                row.onclick = function() { selectNetwork(row, net.ssid, net.security, net.difficulty); };
+                tableBody.appendChild(row);
+            });
+        }
+
+        function selectNetwork(row, ssid, security, difficulty) {
+            let rows = document.querySelectorAll("#networkTableBody tr");
+            rows.forEach(r => r.classList.remove("selected"));
+            row.classList.add("selected");
+            selectedNetwork = { ssid, security, difficulty };
+            logMessage(`> Selected target: ${ssid} (Security: ${security}, Difficulty: ${difficulty})`);
+        }
+
         function hackNetwork() {
             if (!selectedNetwork) {
                 logMessage("> No target selected! Choose a network first.");
@@ -98,11 +107,13 @@
             }
 
             let difficultyMultiplier = selectedNetwork.difficulty * 2;
+            let wordlist = ["password", "123456", "qwerty", "admin", "letmein", "trustno1", "superhacker", "hallo123", "welcome1", "root"];
             let totalAttempts = wordlist.length * difficultyMultiplier;
             let correctPassword = wordlist[Math.floor(Math.random() * wordlist.length)];
             let attemptCount = 0;
 
             logMessage(`> Initiating simulated attack on ${selectedNetwork.ssid}...`);
+            logMessage(`> Estimated attack duration: ${(totalAttempts * 0.4).toFixed(2)} seconds.`);
 
             function attemptHack() {
                 if (attemptCount >= totalAttempts) {
@@ -114,7 +125,9 @@
                 logMessage(`> Trying password: ${currentPassword}`);
 
                 if (currentPassword === correctPassword) {
-                    logMessage(`> Hack successful! Password: ${correctPassword}`);
+                    setTimeout(() => {
+                        logMessage(`> Hack successful! Simulated password for ${selectedNetwork.ssid}: ${correctPassword}`);
+                    }, 1000);
                     return;
                 }
 
