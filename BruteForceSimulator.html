@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cyber Attack Simulator</title>
+    <style>
+        body { background-color: black; color: limegreen; font-family: monospace; text-align: center; }
+        h1 { text-shadow: 0 0 5px limegreen; }
+        button { background: black; color: limegreen; border: 1px solid limegreen; padding: 10px; cursor: pointer; margin: 5px; }
+        button:hover { background: limegreen; color: black; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; border: 1px solid limegreen; }
+        th, td { border: 1px solid limegreen; padding: 8px; text-align: center; cursor: pointer; }
+        th { background-color: limegreen; color: black; }
+        tr.selected { background-color: limegreen; color: black; }
+        .output { text-align: left; padding: 10px; border: 1px solid limegreen; height: 300px; overflow-y: scroll; background-color: black; color: limegreen; }
+    </style>
+</head>
+<body>
+    <h1>Cyber Attack Simulator</h1>
+    <button onclick="scanNetworks()">Scan for Networks</button>
+    <button onclick="hackNetwork()">Attempt Intrusion</button>
+
+    <table id="networkTable" style="display:none;">
+        <thead>
+            <tr>
+                <th>SSID</th>
+                <th>Security</th>
+                <th>Difficulty</th>
+            </tr>
+        </thead>
+        <tbody id="networkTableBody"></tbody>
+    </table>
+
+    <pre id="output" class="output"></pre>
+
+    <script>
+        let availableNetworks = [];
+        let selectedNetwork = null;
+        let wordlist = [
+            "password", "123456", "123456789", "qwerty", "abc123", "password1", "12345", "iloveyou", "admin", "welcome",
+            "monkey", "football", "letmein", "dragon", "sunshine", "princess", "superman", "trustno1", "qazwsx", "qwerty123",
+            "654321", "baseball", "starwars", "computer", "987654321", "hunter", "freedom", "whatever", "maverick",
+            "passw0rd", "ninja", "mustang", "shadow", "killer", "666666", "jordan23", "1qaz2wsx", "soccer", "asdfgh",
+            "qwertyuiop", "zxcvbnm", "pokemon", "welcome1", "charlie", "batman", "hello123", "letmein1", "donald", "trustme",
+            "temp1234", "azerty", "qwertz", "hallo123", "master", "sunshine1", "securepass", "iamsecure", "supersecure",
+            "ultrasecure", "networkpass", "accessgranted", "eliteh4x0r", "superhacker", "p@ssword", "p@ssw0rd", "admin123",
+            "admin2024", "root", "root123", "toor", "adminadmin", "adminpass", "000000", "111111", "121212", "123123", 
+            "123321", "123abc", "987654", "87654321", "741852963", "963852741", "31415926", "112233", "qwert123", "azerty123",
+            "bigmac", "whopper", "doublecheese", "tripleking", "stackoverflow", "githubrocks", "securityfirst", "tryhard",
+            "1234567890", "102030", "6543210", "1a2b3c4d", "hackme", "youcantguess", "totallysecure"
+        ];
+
+        function logMessage(message) {
+            let output = document.getElementById("output");
+            output.innerHTML += message + "<br>";
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function scanNetworks() {
+            logMessage("> Scanning for networks...");
+            availableNetworks = getFakeNetworks();
+            displayNetworks();
+            logMessage("> Scan complete. Found " + availableNetworks.length + " networks.");
+        }
+
+        function getFakeNetworks() {
+            return [
+                { ssid: "A1-7F3D20", security: "WPA2", difficulty: 3 },
+                { ssid: "UPC Wi-Free", security: "WPA2", difficulty: 2 },
+                { ssid: "Magenta_Hotspot_22", security: "WPA3", difficulty: 4 },
+                { ssid: "Drei-HuaweiRouter-5G", security: "WPA2", difficulty: 3 },
+                { ssid: "Café Central WiFi", security: "WPA", difficulty: 1 },
+                { ssid: "McDonalds Free WiFi", security: "Open", difficulty: 1 },
+                { ssid: "FBI Surveillance Van", security: "WPA2", difficulty: 5 },
+                { ssid: "LANe Gott", security: "WPA3", difficulty: 4 },
+                { ssid: "Nachbar schaut mit", security: "WPA2", difficulty: 2 },
+                { ssid: "Router_123456", security: "WPA", difficulty: 3 },
+                { ssid: "VodafoneGuestWiFi", security: "WPA2", difficulty: 2 },
+                { ssid: "Billa Plus Kunden WLAN", security: "Open", difficulty: 1 },
+                { ssid: "TU Wien FreeWiFi", security: "Open", difficulty: 1 },
+                { ssid: "CyberZone Gaming", security: "WPA2", difficulty: 3 },
+                { ssid: "SuperFast 5G HomeNet", security: "WPA3", difficulty: 5 },
+                { ssid: "Wohnung_38A_WiFi", security: "WPA2", difficulty: 2 },
+                { ssid: "TESLA_Charging_Station", security: "WPA3", difficulty: 3 },
+                { ssid: "Airbnb_WiFi_2024", security: "WPA2", difficulty: 2 },
+                { ssid: "Pizzeria_Amore_WLAN", security: "WPA", difficulty: 1 }
+            ];
+        }
+
+
+        function displayNetworks() {
+            let table = document.getElementById("networkTable");
+            let tableBody = document.getElementById("networkTableBody");
+            tableBody.innerHTML = "";
+            table.style.display = "table";
+
+            availableNetworks.forEach(net => {
+                let row = document.createElement("tr");
+                row.innerHTML = `<td>${net.ssid}</td><td>${net.security}</td><td>${"★".repeat(net.difficulty)}</td>`;
+                row.onclick = function() { selectNetwork(row, net.ssid, net.difficulty); };
+                tableBody.appendChild(row);
+            });
+        }
+
+        function selectNetwork(row, ssid, difficulty) {
+            let rows = document.querySelectorAll("#networkTableBody tr");
+            rows.forEach(r => r.classList.remove("selected"));
+            row.classList.add("selected");
+            selectedNetwork = { ssid, difficulty };
+            logMessage(`> Selected target: ${ssid} (Difficulty: ${difficulty})`);
+        }
+
+        function hackNetwork() {
+            if (!selectedNetwork) {
+                logMessage("> No target selected! Choose a network first.");
+                return;
+            }
+
+            let difficultyMultiplier = selectedNetwork.difficulty * 2; // Erhöht die Dauer für schwierigere Netzwerke
+            let totalAttempts = wordlist.length * difficultyMultiplier;
+            let correctPassword = wordlist[Math.floor(Math.random() * wordlist.length)];
+            let attemptCount = 0;
+
+            logMessage(`> Initiating simulated attack on ${selectedNetwork.ssid}...`);
+            logMessage(`> Brute-force attack will take approximately ${totalAttempts * 2 / 100} seconds.`);
+
+            function attemptHack() {
+                if (attemptCount >= totalAttempts) {
+                    logMessage(`> Attack failed. Could not break into ${selectedNetwork.ssid}`);
+                    return;
+                }
+
+                let currentPassword = wordlist[attemptCount % wordlist.length];
+                logMessage(`> Trying password: ${currentPassword}`);
+
+                if (currentPassword === correctPassword) {
+                    setTimeout(() => {
+                        logMessage(`> Hack successful! Simulated password for ${selectedNetwork.ssid}: ${correctPassword}`);
+                        logMessage(`> Time taken: ${(attemptCount * 2 / 100).toFixed(2)} seconds`);
+                    }, 1000);
+                    return;
+                }
+
+                attemptCount++;
+                setTimeout(attemptHack, Math.random() * 500 + 300); // Verzögerung pro Versuch
+            }
+
+            attemptHack();
+        }
+    </script>
+</body>
+</html>

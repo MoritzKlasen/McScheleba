@@ -32,21 +32,40 @@
             font-size: 1.2rem;
             margin-bottom: 20px;
         }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #e94560;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-        .btn:hover {
-            background: #ff2e63;
-        }
         .about, .projects {
             margin-top: 50px;
             padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modern Button Style */
+        .modern-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .modern-btn:hover {
+            background: rgba(233, 69, 96, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.7);
+            transform: translateY(-3px);
+        }
+
+        .project {
+            margin-top: 50px;
+            padding: 30px;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -65,8 +84,13 @@
     </div>
     
     <div class="container projects" id="projects">
-        <h2>My Projects</h2>
-        <p>Some of my coolest projects will be showcased here soon!</p>
+        <h1>My Projects</h1>
     </div>    
+
+    <div class="project">
+        <h2>Cyber Attack Simulator</h2>
+        <p>Simulate scanning and hacking networks in a safe environment.</p>
+        <a href="BruteForceSimulator.html" class="modern-btn">Launch Simulation</a>
+    </div>
 </body>
 </html>
