@@ -1,96 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>McScheleba</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            color: #fff;
-            text-align: center;
-        }
-        .container {
-            width: 80%;
-            margin: 50px auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-        .about, .projects {
-            margin-top: 50px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Modern Button Style */
-        .modern-btn {
-            display: inline-block;
-            padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease-in-out;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .modern-btn:hover {
-            background: rgba(233, 69, 96, 0.8);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 15px rgba(233, 69, 96, 0.7);
-            transform: translateY(-3px);
-        }
-
-        .project {
-            margin-top: 50px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>McScheleba</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+    body {
+      background: #0f0f0f;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .container {
+      width: 80%;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 170, 0.6);
+      transition: transform 0.3s;
+    }
+    .container:hover {
+      transform: scale(1.03);
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px cyan;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+    .about {
+      margin-top: 50px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+    }
+    .projects {
+      margin-top: 50px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-gap: 20px;
+      margin-top: 30px;
+      align-items: start;
+    }
+    .project-box {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid cyan;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 170, 0.6);
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+    .project-box:hover {
+      transform: scale(1.05);
+    }
+    .project-box h2 {
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+      text-shadow: 0 0 10px cyan;
+    }
+    .modern-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(0, 255, 170, 0.3);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      border: 2px solid cyan;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0, 255, 170, 0.6);
+    }
+    .modern-btn:hover {
+      background: cyan;
+      color: #0f0f0f;
+      border-color: white;
+      box-shadow: 0 0 20px cyan;
+      transform: translateY(-3px);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to McScheleba</h1>        
-    </div>
-    
-    <div class="container about">
-        <h2>About Me</h2>
-        <p>Hey, I'm Moritz! 👋 A passionate developer, gamer, and tech nerd. I love bringing creative projects to life—whether in Unity, with Discord bots, or in the backend using NoSQL databases. 🚀</p>
-        <p>When I'm not coding, I dive into the world of video games or explore new technologies. My motto: "Always learning, always improving." 😎</p>
-    </div>
-    
-    <div class="container projects" id="projects">
-        <h1>My Projects</h1>
-    </div>    
+  <div class="container">
+    <h1>Welcome to McScheleba</h1>
+  </div>
 
-    <div class="project">
+  <div class="container about">
+    <h2>About Me</h2>
+    <p>Hi, I’m Moritz—better known as McScheleba online. I’m a 16-year-old programmer and avid gamer with a passion for everything tech-related. When I’m not coding or exploring the latest video games, you’ll find me diving into interesting reads like “Hacking: The Art of Exploitation” by Jon Erickson.</p>
+    <p>I’m currently attending HTL Dornbirn, where I focus on Industrial Engineering and Business Informatics. My favorite classes are hands-on subjects like programming (SWP) and network technology (SPL). My motto: never stop learning, never stop innovating!</p>
+  </div>
+
+  <div class="container projects" id="projects">
+    <h1>My Projects</h1>
+    <div class="projects-grid">
+      <div class="project-box">
         <h2>Cyber Attack Simulator</h2>
         <p>Simulate scanning and hacking networks in a safe environment.</p>
-        <a href="BruteForceSimulator.html" class="modern-btn">Launch Simulation</a>
+        <a href="BruteForceSimulator.html" class="modern-btn">Simulate Now</a>
+      </div>
+      <div class="project-box">
+        <h2>McBot - Discord Bot</h2>
+        <p>An advanced Discord bot with custom commands and automation features.</p>
+        <a href="https://discord.com/oauth2/authorize?client_id=1284143796086509650" class="modern-btn">Invite McBot</a>
+      </div>
     </div>
+  </div>
 </body>
 </html>
